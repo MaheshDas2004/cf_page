@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 import random
+import uuid
 from .models import Profile
+
 def signup(request):
     if request.method == "POST":
         f_name = request.POST.get("first_name")
@@ -13,6 +15,8 @@ def signup(request):
         cf_pass = request.POST.get("confirm_password")
         college=request.POST.get("college")
         username = f"{email.split('@')[0]}_{random.randint(1000, 9999)}"
+
+
 
         if User.objects.filter(email=email).exists():
             return render(request, "accounts/signup.html", {
@@ -41,12 +45,14 @@ def signup(request):
                 'college':college
             })
 
+        anonymous_id = f"anonymous_user{random.randint(1000, 9999)}"
+
         
         user=User.objects.create_user(username=username,first_name=f_name,last_name=l_name, email=email, password=password)
-        profile=Profile.objects.create(user=user,college=college)
+        profile=Profile.objects.create(user=user,college=college,anonymous_id=anonymous_id)
+        print(request.POST)
         login(request,user)
         return redirect("home")
-        print(request.POST)
 
     return render(request, "accounts/signup.html")
 
