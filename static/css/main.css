@@ -1,0 +1,151 @@
+
+/* Custom CSS for enhanced dark mode effects */
+
+/* Glow effects for confession cards in dark mode */
+.dark .confession-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.dark .confession-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(168, 85, 247, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.dark .confession-card:hover::before {
+    opacity: 1;
+}
+
+/* Enhanced glow animation for dark mode */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(168, 85, 247, 0.4), 0 0 10px rgba(168, 85, 247, 0.3), 0 0 15px rgba(168, 85, 247, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.6), 0 0 20px rgba(168, 85, 247, 0.5), 0 0 30px rgba(168, 85, 247, 0.4);
+    }
+}
+
+.dark .confession-card:hover {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+}
+
+/* Theme toggle button enhancements */
+#theme-toggle:hover, #mobile-theme-toggle:hover {
+    transform: scale(1.05);
+}
+
+#theme-toggle-dot, #mobile-theme-toggle-dot {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Backdrop blur enhancements */
+.backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-md {
+    backdrop-filter: blur(12px);
+}
+
+/* Enhanced shadow effects for dark mode */
+.dark .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+.dark .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.dark .shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Purple glow for dark mode hover states */
+.dark .hover\:shadow-purple-500\/10:hover {
+    box-shadow: 0 20px 25px -5px rgba(168, 85, 247, 0.1), 0 10px 10px -5px rgba(168, 85, 247, 0.1);
+}
+
+/* Animated decorative elements */
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .5;
+    }
+}
+
+/* Bounce animation for emoji */
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+        transform: none;
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+/* Focus styles for accessibility */
+button:focus-visible {
+    outline: 2px solid rgba(168, 85, 247, 0.5);
+    outline-offset: 2px;
+}
+
+/* Responsive design enhancements */
+@media (max-width: 768px) {
+    .confession-card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Gradient text enhancements */
+.bg-clip-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Dark mode scrollbar */
+.dark::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dark::-webkit-scrollbar-track {
+    background: rgba(55, 65, 81, 0.3);
+}
+
+.dark::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.5);
+    border-radius: 4px;
+}
+
+.dark::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 85, 247, 0.7);
+}

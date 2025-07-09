@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="flex items-center justify-center px-4 py-8 min-h-[80vh] bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900">
+  <div class="w-full max-w-md bg-white/80 dark:bg-gray-900/90 rounded-2xl shadow-2xl border border-purple-100 dark:border-gray-800 p-8">
+    <h2 class="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-white">Login</h2>
+    <form method="POST" class="space-y-5">
+      {% csrf_token %}
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+        <input type="email" name="email" value="{{email}}" required class="w-full p-2 rounded-lg bg-gray-100 dark:bg-gray-800 border border-purple-100 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" placeholder="you@email.com">
+      </div>
+      <div class="relative">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+        <input type="password" name="password" id="password-input" required class="w-full p-2 pr-10 rounded-lg bg-gray-100 dark:bg-gray-800 border border-purple-100 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" placeholder=" {% if error %}{{error}}{% else %}Password {% endif %}">
+        <button type="button" id="toggle-password" tabindex="-1" class="absolute inset-y-3 right-4  flex items-center justify-center h-full text-gray-400 dark:text-gray-500 hover:text-purple-500 dark:hover:text-purple-400 focus:outline-none" aria-label="Show password">
+          <span class="flex items-center">
+            <svg id="eye-icon" class="w-5 h-5 block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <svg id="eye-off-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.956 9.956 0 012.293-3.95M6.634 6.634A9.956 9.956 0 0112 5c4.477 0 8.268 2.943 9.542 7a9.956 9.956 0 01-4.293 5.95M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18" />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <button type="submit" class="w-full py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg font-semibold text-lg shadow hover:from-purple-600 hover:to-indigo-700 transition-all duration-200">
+        Login
+      </button>
+    </form>
+    <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
+      Don't have an account?
+      <a href="{% url "signup" %}" class="text-purple-600 dark:text-purple-400 hover:underline font-medium">Sign Up</a>
+    </p>
+  </div>
+</section>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('password-input');
+    const togglePassword = document.getElementById('toggle-password');
+    const eyeIcon = document.getElementById('eye-icon');
+    const eyeOffIcon = document.getElementById('eye-off-icon');
+    if (togglePassword && passwordInput) {
+      togglePassword.addEventListener('click', function() {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        eyeIcon.classList.toggle('hidden', !isPassword);
+        eyeOffIcon.classList.toggle('hidden', isPassword);
+      });
+    }
+  });
+</script>
+{% endblock %}

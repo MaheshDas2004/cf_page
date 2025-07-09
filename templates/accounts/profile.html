@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile - Campus Confessions{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Profile Header -->
+        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-xl border border-purple-100 dark:border-purple-800 overflow-hidden mb-8">
+            <div class="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 h-32 relative">
+                <div class="absolute inset-0 bg-black/20"></div>
+            </div>
+            <div class="relative px-6 pb-6">
+                <!-- Profile Picture -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-end -mt-16 mb-6">
+                    <div class="relative">
+                        <div class="w-32 h-32 bg-white dark:bg-gray-800 rounded-full border-4 border-white dark:border-gray-800 shadow-lg overflow-hidden">
+                            {% if user.profile.avatar %}
+                                <img src="" alt="Profile Picture" class="w-full h-full object-cover">
+                            {% else %}
+                                <div class="w-full h-full bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center">
+                                    <span class="text-4xl font-bold text-white">{{ user.username|first|upper }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button class="absolute bottom-0 right-0 bg-purple-500 hover:bg-purple-600 text-white rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-105">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mt-4 sm:mt-0 sm:ml-6 flex-1">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ user.get_full_name|default:user.username }}</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">@{{ user.username }}</p>
+                        <p class="text-gray-500 dark:text-gray-500 text-sm mt-1">Member since {{ user.date_joined|date:"F Y" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column - Profile Stats & Info -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Stats Card -->
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-purple-100 dark:border-purple-800 p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Your Activity</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="bg-purple-100 dark:bg-purple-900 rounded-lg p-2 mr-3">
+                                    <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 dark:text-gray-300">Confessions</span>
+                            </div>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ user.confessions.count }}</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 dark:bg-blue-900 rounded-lg p-2 mr-3">
+                                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 dark:text-gray-300">Likes Given</span>
+                            </div>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ user.likes_given.count }}</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 dark:bg-green-900 rounded-lg p-2 mr-3">
+                                    <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 dark:text-gray-300">Comments</span>
+                            </div>
+                            <span class="font-semibold text-gray-900 dark:text-white">{{ user.comments.count }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-purple-100 dark:border-purple-800 p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
+                    <div class="space-y-3">
+                        <a href="" class="flex items-center w-full p-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            New Confession
+                        </a>
+                        <a href="" class="flex items-center w-full p-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
+                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path>
+                            </svg>
+                            My Confessions
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Profile Settings -->
+            <div class="lg:col-span-2">
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-purple-100 dark:border-purple-800 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Profile Settings</h2>
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="space-y-6">
+                            <!-- Personal Information -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Personal Information</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
+                                        <input type="text" name="first_name" value="{{ user.first_name }}" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
+                                        <input type="text" name="last_name" value="{{ user.last_name }}" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Account Information -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Account Information</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Username</label>
+                                        <input type="text" name="username" value="{{ user.username }}" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                                        <input type="email" name="email" value="{{ user.email }}" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors duration-200">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Privacy Settings -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Privacy Settings</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-900 dark:text-white">Show Profile to Others</h4>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Allow other users to view your profile</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" name="show_profile" value="true" class="sr-only peer" {% if user.profile.show_profile %}checked{% endif %}>
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-purple-600"></div>
+                                        </label>
+                                    </div>
+    
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200 dark:border-gray-600">
+                                <button type="submit" class="flex-1 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
+                                    Save Changes
+                                </button>
+                                <a href="" class="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200 text-center">
+                                    Change Password
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="mt-8 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6">
+                    <h3 class="text-lg font-medium text-red-900 dark:text-red-300 mb-2">Danger Zone</h3>
+                    <p class="text-sm text-red-700 dark:text-red-400 mb-4">Once you delete your account, there is no going back. Please be certain.</p>
+                    <button onclick="confirmDelete()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                        Delete Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full p-6">
+        <div class="flex items-center mb-4">
+            <div class="bg-red-100 dark:bg-red-900 rounded-full p-2 mr-3">
+                <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Delete Account</h3>
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Are you sure you want to delete your account? This action cannot be undone and all your confessions will be permanently removed.</p>
+        <div class="flex gap-3">
+            <button onclick="closeDeleteModal()" class="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
+                Cancel
+            </button>
+            <a href="" class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-center">
+                Delete Account
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDelete() {
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeDeleteModal();
+    }
+});
+</script>
+{% endblock %}
